@@ -13,6 +13,7 @@ import 'package:plante/outside/map/address_obtainer.dart';
 import 'package:plante/outside/products/suggestions/suggestion_type.dart';
 import 'package:plante/ui/base/colors_plante.dart';
 import 'package:plante/ui/base/components/button_filled_small_plante.dart';
+import 'package:plante/ui/base/components/check_button_plante.dart';
 import 'package:plante/ui/base/components/shop_card.dart';
 import 'package:plante/ui/base/text_styles.dart';
 import 'package:plante/ui/base/ui_utils.dart';
@@ -160,6 +161,35 @@ class MapPageModeDefault extends MapPageModeShopsCardBase {
     if (!shopsForViewPortLoaded) {
       return super.buildTopActions();
     }
+
+    // MapShopsFilterCheckbox(
+    // key: const Key('filter_empty_shops'),
+    // text: context.strings.map_page_filter_empty_shops,
+    // markerColor: ColorsPlante.grey,
+    // value: _showEmptyShops.watch(ref),
+    // onChanged: _setShowEmptyShops,
+    // ),
+    return SizedBox(height: 30, child: ListView(
+      scrollDirection: Axis.horizontal,
+      children: [
+        Padding(padding: EdgeInsets.symmetric(horizontal: 2), child: CheckButtonPlante(
+            checked: _showNotEmptyShops.watch(ref),
+            text: context.strings.map_page_filter_not_empty_shops,
+            onChanged: _setShowNotEmptyShops)),
+    Padding(padding: EdgeInsets.symmetric(horizontal: 2), child: CheckButtonPlante(
+            checked: _showSuggestionsAtShop[SuggestionType.RADIUS]!.watch(ref),
+            text: context.strings.map_page_filter_shops_with_radius_suggested_products,
+            onChanged: _setShowRadSuggestedShops)),
+            Padding(padding: EdgeInsets.symmetric(horizontal: 2), child: CheckButtonPlante(
+            checked: _showSuggestionsAtShop[SuggestionType.OFF]!.watch(ref),
+            text: context.strings.map_page_filter_shops_with_off_suggested_products,
+            onChanged: _setShowOffSuggestedShops)),
+    Padding(padding: EdgeInsets.symmetric(horizontal: 2), child: CheckButtonPlante(
+            checked: _showEmptyShops.watch(ref),
+            text: context.strings.map_page_filter_empty_shops,
+            onChanged: _setShowEmptyShops)),
+      ]
+    ));
 
     return Align(
         alignment: Alignment.centerRight,
